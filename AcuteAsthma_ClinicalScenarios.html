@@ -750,9 +750,7 @@ const SCENARIOS = [
 
     presentation: {
       eyebrow: "Scenario 01 — Presentation",
-      imgEmoji: "🌾",
-      imgLabel: "Photo: adult male, sitting upright, visibly using accessory muscles, dusty rural health post setting",
-      imgPrompt: "AI prompt: 'Photorealistic image of a 34-year-old male farm worker sitting upright in a rural clinic chair, hands on knees, slightly distressed breathing, dusty clothing, daytime. Clinical portrait style, natural lighting.'",
+      <img src="images/scenario1_farmer.jpg" alt="34-year-old male farm worker in respiratory distress at rural clinic" style="width:100%; height:220px; object-fit:cover; border-radius:8px; margin-bottom:20px;">
       intro: `<strong>34-year-old male</strong> with a 5-year history of asthma presents to your Role 2 clinic 40 minutes after beginning work harvesting wheat. He used his salbutamol MDI twice in the field with minimal relief. He is sitting upright, breathing rapidly.`,
       vitals: [
         { label: "HR", value: "108", unit: "/min", state: "warn" },
@@ -840,9 +838,7 @@ const SCENARIOS = [
 
     presentation: {
       eyebrow: "Scenario 02 — Presentation",
-      imgEmoji: "🚨",
-      imgLabel: "Photo: young adult female, tripod position, visibly distressed, unable to speak, healthcare worker at bedside in basic clinic",
-      imgPrompt: "AI prompt: 'Photorealistic image of a 28-year-old woman in severe respiratory distress, sitting in tripod position on a basic clinic bed, unable to speak, diaphoretic, healthcare worker taking vitals beside her. Dim resource-limited clinic interior, dramatic lighting.'",
+      <img src="images/scenario2_silent_chest.jpg" alt="Young woman in near-fatal respiratory distress, tripod position" style="width:100%; height:220px; object-fit:cover; border-radius:8px; margin-bottom:20px;">
       intro: `A <strong>28-year-old woman</strong> is carried into your Role 2 facility by family. She has had asthma since childhood, has not had access to her inhalers for 2 days. On arrival she can say only <span class='danger-highlight'>one or two words</span>, is diaphoretic, and sits rigidly forward with hands on knees.`,
       vitals: [
         { label: "HR", value: "138", unit: "/min", state: "danger" },
@@ -931,9 +927,7 @@ const SCENARIOS = [
 
     presentation: {
       eyebrow: "Scenario 03 — Presentation",
-      imgEmoji: "🩸",
-      imgLabel: "Photo: male patient sitting on hospital bed, oxygen mask, nurse handing over VBG result paper, moderate clinic setting",
-      imgPrompt: "AI prompt: 'Photorealistic clinical photo of a 41-year-old male patient sitting upright in a hospital bed, oxygen mask on face, slightly pale and diaphoretic. A healthcare worker hands him a blood gas printout. Role 2 clinic environment, controlled lighting.'",
+     <img src="images/scenario3_blood_gas.jpg" alt="Patient receiving blood gas result, oxygen mask, clinic setting" style="width:100%; height:220px; object-fit:cover; border-radius:8px; margin-bottom:20px;">
       intro: `A <strong>41-year-old teacher</strong> with severe asthma is 30 minutes into treatment with salbutamol, ipratropium, and IV steroids. Your nurse says, <span class='highlight'>"His respiratory rate is coming down from 34 to 28, and his blood gas looks normal — pCO₂ 40 mmHg, pH 7.41."</span> He still looks uncomfortable but is no longer as agitated.`,
       vitals: [
         { label: "HR", value: "122", unit: "/min", state: "danger" },
@@ -1021,9 +1015,7 @@ const SCENARIOS = [
 
     presentation: {
       eyebrow: "Scenario 04 — Presentation",
-      imgEmoji: "⚗️",
-      imgLabel: "Photo: healthcare worker reviewing a lab printout with rising lactate value, looking concerned, patient visible in background on oxygen",
-      imgPrompt: "AI prompt: 'Photorealistic photo of a healthcare worker in scrubs reviewing a blood test printout, frowning, with a patient visible in the background lying on a clinic bed with oxygen mask, dim clinic environment, photojournalism style.'",
+      <img src="images/scenario4_lactate.jpg" alt="Clinician reviewing elevated lactate result, patient improving in background" style="width:100%; height:220px; object-fit:cover; border-radius:8px; margin-bottom:20px;">
       intro: `A <strong>36-year-old woman with asthma</strong> has been on continuous salbutamol nebulization for 90 minutes (cumulative 20mg). She has received IV hydrocortisone and IV MgSO₄. Her wheeze is clearly improving, she is speaking in full sentences, and her SpO₂ has risen from 89% to 95%. Your junior colleague calls you over: <span class='highlight'>"Her lactate just came back at 5.2 mmol/L — should we intubate?"</span>`,
       vitals: [
         { label: "HR", value: "118", unit: "/min", state: "warn" },
@@ -1110,8 +1102,7 @@ const SCENARIOS = [
     presentation: {
       eyebrow: "Scenario 05 — Presentation",
       imgEmoji: "⚡",
-      imgLabel: "Photo: young male patient in acute distress, clinician performing auscultation with stethoscope, noting asymmetric breath sounds, basic clinic bed",
-      imgPrompt: "AI prompt: 'Photorealistic medical photo of a young male patient in his 20s, gasping for breath on a clinic bed, while a clinician in scrubs auscultates his chest with a stethoscope. The clinician looks alarmed. Emergency lighting, role 2 clinic interior.'",
+      <img src="images/scenario5_pneumothorax.jpg" alt="Young male patient in acute respiratory deterioration, clinician auscultating" style="width:100%; height:220px; object-fit:cover; border-radius:8px; margin-bottom:20px;">
       intro: `A <strong>22-year-old male</strong> with asthma has been on treatment for 45 minutes: salbutamol, ipratropium, IV steroids. He was improving — SpO₂ had risen to 93% and wheeze was reducing. Suddenly he becomes acutely more distressed. <span class='danger-highlight'>SpO₂ drops to 82%</span>, he is unable to speak, and the wheeze has vanished completely.`,
       vitals: [
         { label: "HR", value: "148", unit: "/min", state: "danger" },
@@ -1197,9 +1188,7 @@ const SCENARIOS = [
 
     presentation: {
       eyebrow: "Scenario 06 — Presentation",
-      imgEmoji: "🔴",
-      imgLabel: "Photo: emergency team preparing RSI drugs and laryngoscope at a bedside, patient on supplemental oxygen, dim role 2 facility",
-      imgPrompt: "AI prompt: 'Photorealistic medical photograph of an emergency team preparing to intubate a critically ill patient. One clinician holds a laryngoscope, another draws up medication into a syringe. The patient is on a stretcher with oxygen mask. Dim clinical lighting, tense atmosphere, role 2 military or remote facility.'",
+      <img src="images/scenario6_intubation.jpg" alt="Emergency team preparing RSI at Role 2 facility" style="width:100%; height:220px; object-fit:cover; border-radius:8px; margin-bottom:20px;">
       intro: `A <strong>45-year-old man with asthma</strong> has received maximum therapy: continuous salbutamol × 90 min, ipratropium × 3 doses, IV MgSO₄ 2g, IV hydrocortisone 200 mg, IM epinephrine × 1. His SpO₂ is <span class='danger-highlight'>84%</span> on 15L NRB, he has become progressively more somnolent, and his respiratory rate has dropped from 36 to 18 — not from improvement, but from fatigue. You are 3 hours from any ICU.`,
       vitals: [
         { label: "GCS", value: "12", unit: "E3V4M5", state: "danger" },
@@ -1288,9 +1277,7 @@ const SCENARIOS = [
 
     presentation: {
       eyebrow: "Scenario 07 — Presentation",
-      imgEmoji: "💨",
-      imgLabel: "Photo: ventilated patient in bed, alarming ventilator monitor, clinician performing expiratory hold maneuver on ventilator controls",
-      imgPrompt: "AI prompt: 'Photorealistic medical image of a critically ill intubated patient on a mechanical ventilator. The ventilator screen shows high airway pressures. A clinician is pressing buttons on the ventilator control panel. ICU or role 2 clinical environment, dramatic overhead lighting.'",
+      <img src="images/scenario7_ventilator.jpg" alt="Intubated patient on ventilator showing high airway pressures" style="width:100%; height:220px; object-fit:cover; border-radius:8px; margin-bottom:20px;">
       intro: `A <strong>52-year-old intubated asthmatic</strong> was transferred to your Role 2 from a rural clinic. Ventilator settings on arrival: Rate 20, TV 550 mL, PEEP 5. Forty minutes later, your nurse calls urgently: <span class='danger-highlight'>BP has dropped from 118/76 to 68/42, HR spiking to 152.</span> The ventilator is alarming high peak pressures. Bilateral breath sounds are present but severely diminished.`,
       vitals: [
         { label: "BP", value: "68/42", unit: "mmHg ↓↓", state: "danger" },
@@ -1377,9 +1364,7 @@ const SCENARIOS = [
 
     presentation: {
       eyebrow: "Scenario 08 — Presentation",
-      imgEmoji: "🔍",
-      imgLabel: "Photo: older male patient in acute respiratory distress, sitting upright in bed, lower limb edema visible, concerned clinician at bedside performing POCUS",
-      imgPrompt: "AI prompt: 'Photorealistic clinical photo of a 67-year-old male in visible respiratory distress, sitting upright in a hospital bed with obvious bilateral leg swelling below the knees. A clinician presses an ultrasound probe to the patient\'s chest while another monitors vital signs. Role 2 clinic setting.'",
+      <img src="images/scenario8_cardiac.jpg" alt="Elderly male with bilateral leg edema, clinician performing POCUS" style="width:100%; height:220px; object-fit:cover; border-radius:8px; margin-bottom:20px;">
       intro: `A <strong>67-year-old man</strong> presents with 3 days of worsening dyspnea and wheeze. He has a documented asthma history and has been given salbutamol, ipratropium, and oral steroids over the past 12 hours without improvement. On your assessment, you notice he is <span class='highlight'>orthopneic</span>, has <span class='highlight'>bilateral pitting leg edema to the knee</span>, and his JVP is elevated. His wheeze is bilateral and fine.`,
       vitals: [
         { label: "HR", value: "104", unit: "/min", state: "warn" },
