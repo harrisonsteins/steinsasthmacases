@@ -197,6 +197,10 @@
   .screen { display: none; animation: fadeIn 0.3s ease; }
   .screen.active { display: block; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
+  .option-btn.shake { animation: shake 0.4s ease; }
+  .option-btn.wrong-pick { background: rgba(192,57,43,0.1); border-color: rgba(192,57,43,0.4); }
+  .option-btn.wrong-pick .option-letter { background: var(--red); color:#fff; }
 
   /* ── PRESENTATION SCREEN ── */
   .scenario-header {
@@ -475,6 +479,11 @@
     margin-top: 8px;
     animation: fadeIn 0.25s ease;
   }
+  .feedback-box.tryagain-fb {
+    background: rgba(217,119,6,0.1);
+    border: 1px solid rgba(217,119,6,0.35);
+  }
+  .feedback-box.tryagain-fb .feedback-header { color: var(--amber); }
   .feedback-box.correct-fb {
     background: rgba(5,150,105,0.1);
     border: 1px solid rgba(5,150,105,0.3);
@@ -823,12 +832,11 @@ const SCENARIOS = [
 
     diagnosis: {
       question: "What is your clinical stage and immediate diagnostic priority?",
-      sub: "Select the most accurate assessment of this patient.",
       options: [
-        { letter: "A", text: "Stage 1 (mild) — discharge with MDI and follow-up", sub: "PEFR 58%, SpO₂ 93%, using accessory muscles" },
-        { letter: "B", text: "Stage 2 (moderate) — treat aggressively, reassess at 20 minutes", sub: "Correct clinical staging based on vitals, SpO₂, and PEFR", correct: true },
-        { letter: "C", text: "Stage 3 (near-fatal) — prepare for immediate intubation", sub: "Paradoxical breathing, single words, SpO₂ <88%?" },
-        { letter: "D", text: "Acute COPD exacerbation — treat differently", sub: "No smoking history, age 34, known asthma" }
+        { letter: "A", text: "Stage 1 (mild) — discharge with MDI and follow-up" },
+        { letter: "B", text: "Stage 2 (moderate) — treat aggressively, reassess at 20 minutes", correct: true },
+        { letter: "C", text: "Stage 3 (near-fatal) — prepare for immediate intubation" },
+        { letter: "D", text: "Acute COPD exacerbation — treat differently" }
       ],
       correctFeedback: `Correct. <strong>Stage 2 moderate-to-severe</strong> is the right call. SpO₂ 93% on room air, PEFR 58% (in the 33-75% moderate range), tachycardia, and accessory muscle use all point here. He can still speak in sentences — he's not Stage 3 yet — but this is not mild. He failed two puffs of MDI in the field. He needs aggressive treatment and close reassessment at 20 minutes.`,
       incorrectFeedback: `Not quite. <strong>PEFR 58%</strong> puts him in the moderate range (33-75%), SpO₂ is 93% on room air, and he is using accessory muscles — these together define Stage 2, not Stage 1. He also failed pre-hospital bronchodilator treatment. Stage 3 would require paradoxical breathing, SpO₂ <88%, or inability to speak. COPD is incorrect — this is a known asthmatic with an allergic trigger.`
@@ -836,7 +844,6 @@ const SCENARIOS = [
 
     management: {
       title: "Management: Stage 2 Moderate Asthma at Role 2",
-      sub: "No nebulizer available. Use MDI + spacer protocol.",
       phases: [
         {
           label: "Immediate — 0 to 5 min",
@@ -913,12 +920,11 @@ const SCENARIOS = [
 
     diagnosis: {
       question: "You auscultate a near-silent chest. A student says 'good — the wheeze has cleared.' How do you respond?",
-      sub: "Choose the most clinically accurate interpretation.",
       options: [
-        { letter: "A", text: "Agree — clearing wheeze indicates bronchodilation", sub: "The patient appears more comfortable and air entry is better" },
-        { letter: "B", text: "Disagree — silent chest in a distressed patient indicates minimal air movement, not improvement. This is a Stage 3 near-fatal presentation.", sub: "Correct interpretation of the silent chest finding", correct: true },
-        { letter: "C", text: "Uncertain — obtain CXR before deciding severity", sub: "CXR takes time and will not change immediate management" },
-        { letter: "D", text: "Consider pneumothorax as primary diagnosis", sub: "No asymmetry, no tracheal deviation, bilateral finding" }
+        { letter: "A", text: "Agree — clearing wheeze indicates bronchodilation" },
+        { letter: "B", text: "Disagree — silent chest in a distressed patient indicates minimal air movement, not improvement. This is a Stage 3 near-fatal presentation.", correct: true },
+        { letter: "C", text: "Uncertain — obtain CXR before deciding severity" },
+        { letter: "D", text: "Consider pneumothorax as primary diagnosis" }
       ],
       correctFeedback: `Exactly right. <strong>Silent chest in an obviously distressed patient is a clinical emergency.</strong> Wheeze requires airflow. The absence of wheeze alongside SpO₂ 86%, HR 138, pulsus paradoxus 28 mmHg, and inability to speak means this patient is barely moving air. This is Stage 3 near-fatal asthma. The student's error is one of the most dangerous in all of emergency medicine.`,
       incorrectFeedback: `This is a critical teaching point: <strong>a silent chest in a distressed patient = minimal air movement, NOT improvement.</strong> Wheeze requires turbulent airflow through narrowed airways. When there is almost no airflow, the wheeze disappears. Her other signs — SpO₂ 86%, HR 138, pulsus paradoxus 28 mmHg, inability to speak — confirm Stage 3. CXR and PTX workup are not the priority — immediate maximum therapy is.`
@@ -926,7 +932,6 @@ const SCENARIOS = [
 
     management: {
       title: "Management: Near-Fatal Asthma at Role 2 — Aggressive Bridge to Transfer",
-      sub: "4-hour road transfer to ICU. Maximize medical therapy and prepare for possible RSI.",
       phases: [
         {
           label: "Immediate — 0 to 5 min",
@@ -1004,12 +1009,11 @@ const SCENARIOS = [
 
     diagnosis: {
       question: "The nurse says the blood gas is normal. What is your interpretation?",
-      sub: "What does pCO₂ 40 mmHg, pH 7.41 mean in this clinical context?",
       options: [
-        { letter: "A", text: "Normal gas — good sign, continue current treatment and observe", sub: "RR improving, gas normalizing" },
-        { letter: "B", text: "Normal pCO₂ in a tachypneic, distressed asthmatic = danger sign. He should be hyperventilating — a normal CO₂ means he is tiring and cannot maintain compensation.", sub: "Correct interpretation", correct: true },
-        { letter: "C", text: "Repeat the VBG in 1 hour to confirm the trend", sub: "Appropriate but incomplete — misses the urgency" },
-        { letter: "D", text: "pH 7.41 confirms no acidosis, gas acceptable", sub: "Focuses only on pH, misses the CO₂ significance" }
+        { letter: "A", text: "Normal gas — good sign, continue current treatment and observe" },
+        { letter: "B", text: "Normal pCO₂ in a tachypneic, distressed asthmatic = danger sign. He should be hyperventilating — a normal CO₂ means he is tiring and cannot maintain compensation.", correct: true },
+        { letter: "C", text: "Repeat the VBG in 1 hour to confirm the trend" },
+        { letter: "D", text: "pH 7.41 confirms no acidosis, gas acceptable" }
       ],
       correctFeedback: `Precisely right. <strong>A normal pCO₂ (40 mmHg) in a patient working this hard is not reassuring — it is alarming.</strong> This patient should be hyperventilating, which would give a LOW pCO₂ of 28-34. Instead his CO₂ has climbed to 40 — the normal range — which means his minute ventilation has already started to fail. His muscles are fatiguing. This is the last warning before hypercapnia and respiratory failure. Combine this with PEFR 31% (life-threatening threshold) and you have a patient in impending respiratory failure despite a "normal" gas.`,
       incorrectFeedback: `This is one of the most important teaching points in asthma management: <strong>normal pCO₂ in a distressed, tachypneic asthmatic is a danger sign, not reassurance.</strong> Early-moderate asthma causes hyperventilation and a LOW pCO₂ (28-34 mmHg). When the CO₂ climbs back to "normal" (38-42 mmHg) in someone still breathing at RR 28 and still struggling, it means ventilatory compensation is failing. PEFR 31% confirms life-threatening severity. This patient needs escalation, not observation.`
@@ -1017,7 +1021,6 @@ const SCENARIOS = [
 
     management: {
       title: "Management: Impending Respiratory Failure — Escalate Before Arrest",
-      sub: "90-minute transfer window. Maximize therapy and prepare RSI.",
       phases: [
         {
           label: "Immediate Escalation",
@@ -1094,12 +1097,11 @@ const SCENARIOS = [
 
     diagnosis: {
       question: "Your junior colleague wants to intubate because of the lactate of 5.2. What is your assessment?",
-      sub: "Interpret the elevated lactate in this clinical context.",
       options: [
-        { letter: "A", text: "Intubate — lactate 5.2 indicates severe physiologic compromise", sub: "Rising lactate requires immediate escalation" },
-        { letter: "B", text: "Sepsis — start broad-spectrum antibiotics and fluids", sub: "Fever? Signs of infection? Review the trigger" },
-        { letter: "C", text: "This is iatrogenic beta-2-agonist lactic acidosis. The patient is clinically improving. Do not escalate — reduce salbutamol dose and repeat lactate in 90 minutes.", sub: "Correct interpretation in context", correct: true },
-        { letter: "D", text: "Obtain CT chest urgently to rule out PE", sub: "No clinical features of PE in acute asthma presentation" }
+        { letter: "A", text: "Intubate — lactate 5.2 indicates severe physiologic compromise" },
+        { letter: "B", text: "Sepsis — start broad-spectrum antibiotics and fluids" },
+        { letter: "C", text: "This is iatrogenic beta-2-agonist lactic acidosis. The patient is clinically improving. Do not escalate — reduce salbutamol dose and repeat lactate in 90 minutes.", correct: true },
+        { letter: "D", text: "Obtain CT chest urgently to rule out PE" }
       ],
       correctFeedback: `Exactly right. <strong>High-dose salbutamol causes aerobic lactic acidosis</strong> through beta-2-mediated stimulation of glycolysis in skeletal muscle and adipose tissue, independent of tissue hypoxia. The lactate rises predictably with continuous nebulization doses above 15-20 mg. The key differentiator: the patient is <em>clinically improving</em> — SpO₂ up, RR down, PEFR up, speaking comfortably. If you treat the lactate by intubating, you cause harm. Reduce bronchodilator dose as the clinical response allows, repeat lactate in 90 minutes — it will trend down.`,
       incorrectFeedback: `<strong>This lactate is iatrogenic.</strong> High-dose salbutamol (beta-2 agonist) stimulates glycolysis and causes aerobic lactate production — not tissue hypoxia. The clinical picture does NOT support sepsis (no fever), PE, or acute deterioration requiring intubation. In fact, every clinical parameter is <em>improving</em>: SpO₂ 89→95%, RR reducing, wheeze improving, speaking in sentences. Intubating a clinically improving patient based on a drug-induced lab value is a serious clinical error.`
@@ -1107,7 +1109,6 @@ const SCENARIOS = [
 
     management: {
       title: "Management: Salbutamol Lactic Acidosis — Contextualize, Monitor, Reduce",
-      sub: "The treatment is time and dose reduction — not escalation.",
       phases: [
         {
           label: "Immediate Assessment",
@@ -1182,12 +1183,11 @@ const SCENARIOS = [
 
     diagnosis: {
       question: "What is the diagnosis and what is your first action?",
-      sub: "Sudden unilateral deterioration after initial improvement in an asthmatic.",
       options: [
-        { letter: "A", text: "Worsening asthma — give IM epinephrine and escalate bronchodilators", sub: "Bilateral treatment for bilateral disease" },
-        { letter: "B", text: "Left tension pneumothorax — immediate needle decompression without waiting for CXR", sub: "Correct: clinical diagnosis, treat immediately", correct: true },
-        { letter: "C", text: "Mucus plug with left lobar atelectasis — bronchodilators and physiotherapy", sub: "Possible, but hemodynamic compromise changes urgency" },
-        { letter: "D", text: "Obtain portable CXR before any intervention", sub: "Tension PTX is a clinical diagnosis — CXR not required and delays treatment" }
+        { letter: "A", text: "Worsening asthma — give IM epinephrine and escalate bronchodilators" },
+        { letter: "B", text: "Left tension pneumothorax — immediate needle decompression without waiting for CXR", correct: true },
+        { letter: "C", text: "Mucus plug with left lobar atelectasis — bronchodilators and physiotherapy" },
+        { letter: "D", text: "Obtain portable CXR before any intervention" }
       ],
       correctFeedback: `Correct and critical. <strong>Tension pneumothorax is a clinical diagnosis.</strong> Sudden unilateral deterioration in a known asthmatic with asymmetric breath sounds (absent left, wheeze right), tracheal deviation away from the affected side, and hemodynamic compromise (BP 94/68) is tension PTX until proven otherwise. A CXR is NOT required. Every minute of delay increases mortality. Perform needle decompression of the left chest immediately — 2nd intercostal space, midclavicular line.`,
       incorrectFeedback: `<strong>This is a tension pneumothorax.</strong> The triad of sudden unilateral deterioration + absent unilateral breath sounds + hemodynamic compromise (hypotension, tachycardia) in an asthmatic who was improving = tension PTX. Tracheal deviation away from the affected side is a late but confirmatory sign. Mucus plug does not cause tracheal deviation or hemodynamic compromise this rapidly. NEVER wait for a CXR in suspected tension PTX with hemodynamic instability — the diagnosis is clinical.`
@@ -1195,7 +1195,6 @@ const SCENARIOS = [
 
     management: {
       title: "Management: Left Tension Pneumothorax Complicating Asthma",
-      sub: "Clinical diagnosis — treat immediately. CXR is NOT required.",
       phases: [
         {
           label: "Immediate Decompression",
@@ -1270,12 +1269,11 @@ const SCENARIOS = [
 
     diagnosis: {
       question: "Which drug combination for RSI is most appropriate in this asthmatic?",
-      sub: "Choose the safest and most effective induction and paralytic combination.",
       options: [
-        { letter: "A", text: "Propofol 2 mg/kg + succinylcholine 1.5 mg/kg", sub: "Propofol is commonly used for RSI" },
-        { letter: "B", text: "Ketamine 1.5–2 mg/kg + succinylcholine 1.5 mg/kg", sub: "Correct: preferred combination in acute asthma", correct: true },
-        { letter: "C", text: "Midazolam 0.3 mg/kg + vecuronium 0.1 mg/kg", sub: "Midazolam causes hypotension; vecuronium onset too slow for RSI" },
-        { letter: "D", text: "Etomidate 0.3 mg/kg + rocuronium 1.2 mg/kg", sub: "Acceptable alternative but not preferred in asthma" }
+        { letter: "A", text: "Propofol 2 mg/kg + succinylcholine 1.5 mg/kg" },
+        { letter: "B", text: "Ketamine 1.5–2 mg/kg + succinylcholine 1.5 mg/kg", correct: true },
+        { letter: "C", text: "Midazolam 0.3 mg/kg + vecuronium 0.1 mg/kg" },
+        { letter: "D", text: "Etomidate 0.3 mg/kg + rocuronium 1.2 mg/kg" }
       ],
       correctFeedback: `Correct. <strong>Ketamine + succinylcholine is the drug combination of choice for RSI in acute asthma.</strong> Ketamine causes bronchodilation through two mechanisms: endogenous catecholamine release and direct airway smooth muscle relaxation. It also maintains cardiovascular stability — critical in this patient who is hypotensive (BP 88/56). Succinylcholine gives the fastest onset and shortest duration — if the intubation fails, the patient will resume spontaneous breathing in 8-12 minutes. Propofol can worsen bronchospasm at induction and causes dangerous hypotension in the hemodynamically compromised patient.`,
       incorrectFeedback: `<strong>Ketamine + succinylcholine is the correct combination in asthma.</strong> Ketamine is bronchodilatory — it releases catecholamines and directly relaxes smooth muscle. In this hemodynamically unstable patient (BP 88/56), it also maintains cardiovascular stability. Propofol can worsen bronchospasm and causes significant hypotension. Midazolam is hemodynamically unstable in a compromised patient. Vecuronium is too slow for RSI induction — onset 3-5 minutes. Etomidate+rocuronium is an acceptable alternative but not preferred given ketamine's dual bronchodilatory benefit.`
@@ -1283,7 +1281,6 @@ const SCENARIOS = [
 
     management: {
       title: "Management: RSI in Severe Asthma — Step by Step at Role 2",
-      sub: "Intubate now. Permissive hypercapnia post-intubation. Transfer immediately.",
       phases: [
         {
           label: "Pre-oxygenation",
@@ -1361,12 +1358,11 @@ const SCENARIOS = [
 
     diagnosis: {
       question: "What is causing this hemodynamic collapse and what is your first intervention?",
-      sub: "BP 68/42, HR 152, peak pressure 62, auto-PEEP 18 in a ventilated asthmatic.",
       options: [
-        { letter: "A", text: "Tension pneumothorax — bilateral needle decompression", sub: "Breath sounds are bilateral and equal" },
-        { letter: "B", text: "Septic shock — start antibiotics and vasopressors", sub: "No infection signs, sudden onset, ventilator alarms present" },
-        { letter: "C", text: "Auto-PEEP causing dynamic hyperinflation and obstructive shock — disconnect from ventilator for 30 seconds to allow exhalation", sub: "Correct: first intervention for auto-PEEP collapse", correct: true },
-        { letter: "D", text: "Increase PEEP to 10 to recruit alveoli", sub: "Adding external PEEP to a patient with high auto-PEEP = disaster" }
+        { letter: "A", text: "Tension pneumothorax — bilateral needle decompression" },
+        { letter: "B", text: "Septic shock — start antibiotics and vasopressors" },
+        { letter: "C", text: "Auto-PEEP causing dynamic hyperinflation and obstructive shock — disconnect from ventilator for 30 seconds to allow exhalation", correct: true },
+        { letter: "D", text: "Increase PEEP to 10 to recruit alveoli" }
       ],
       correctFeedback: `Exactly right. <strong>Dynamic hyperinflation with auto-PEEP causing obstructive shock</strong> is the most common cause of sudden hemodynamic collapse in ventilated asthmatics. Rate 20 and PEEP 5 are completely wrong settings — the patient cannot exhale fast enough with obstructed airways at that rate. Auto-PEEP 18 cmH₂O means 18 cmH₂O of trapped gas pressure is crushing the right heart and impeding venous return. <strong>Disconnect from the ventilator for 20-30 seconds</strong> — allow passive exhalation of trapped gas. This is the fastest, safest intervention.`,
       incorrectFeedback: `<strong>This is obstructive shock from dynamic hyperinflation and auto-PEEP.</strong> Bilateral breath sounds rule out tension PTX. No infection signs rule out sepsis. Adding more PEEP to a patient with auto-PEEP 18 would be catastrophic — you would be adding external pressure on top of 18 cmH₂O of trapped pressure. The correct first step is to <strong>disconnect from the ventilator</strong> and allow the lungs to decompress passively. The ventilator settings (rate 20, PEEP 5) are causing this — they were completely inappropriate for an asthmatic.`
@@ -1374,7 +1370,6 @@ const SCENARIOS = [
 
     management: {
       title: "Management: Auto-PEEP Collapse in the Ventilated Asthmatic",
-      sub: "Disconnect, decompress, then reset settings correctly.",
       phases: [
         {
           label: "Emergency Decompression",
@@ -1450,12 +1445,11 @@ const SCENARIOS = [
 
     diagnosis: {
       question: "The patient has been treated as asthma for 12 hours without improvement. What is the most likely diagnosis?",
-      sub: "Note the orthopnea, leg edema, elevated JVP, hypertension, and bilateral crackles.",
       options: [
-        { letter: "A", text: "Refractory asthma — escalate to IV magnesium and IM epinephrine", sub: "12 hours of bronchodilators with no response" },
-        { letter: "B", text: "Acute decompensated heart failure with cardiogenic pulmonary edema ('cardiac asthma')", sub: "Correct: orthopnea, JVP elevation, edema, hypertension, crackles", correct: true },
-        { letter: "C", text: "COPD exacerbation — start antibiotics and increase bronchodilators", sub: "Smoking history? No COPD features documented" },
-        { letter: "D", text: "Bilateral pneumonia — antibiotics and O₂", sub: "Fever? Productive cough? Consolidation? None documented" }
+        { letter: "A", text: "Refractory asthma — escalate to IV magnesium and IM epinephrine" },
+        { letter: "B", text: "Acute decompensated heart failure with cardiogenic pulmonary edema ('cardiac asthma')", correct: true },
+        { letter: "C", text: "COPD exacerbation — start antibiotics and increase bronchodilators" },
+        { letter: "D", text: "Bilateral pneumonia — antibiotics and O₂" }
       ],
       correctFeedback: `Correct and diagnostically critical. <strong>This is acute decompensated heart failure, not asthma.</strong> The history of orthopnea, leg edema to the knee, elevated JVP, hypertension, and bilateral basal crackles all point to cardiogenic pulmonary edema — sometimes called 'cardiac asthma' because pulmonary interstitial edema triggers bronchospasm and wheeze. The failure to respond to 12 hours of bronchodilators is the diagnostic key. The treatment is completely different: diuresis, vasodilation, and positioning — NOT more bronchodilators.`,
       incorrectFeedback: `<strong>This is acute decompensated heart failure, not asthma.</strong> Three features are incompatible with pure asthma: orthopnea, bilateral pitting leg edema to the knee, and elevated JVP. These are signs of right and left heart failure with fluid overload. 'Cardiac asthma' is a classic diagnostic trap — heart failure causes pulmonary edema which triggers bronchospasm and wheeze that mimics asthma. The key discriminator: failure to respond to bronchodilators + signs of fluid overload = heart failure until proven otherwise.`
@@ -1463,7 +1457,6 @@ const SCENARIOS = [
 
     management: {
       title: "Management: Acute Decompensated Heart Failure at Role 2 — Not More Bronchodilators",
-      sub: "Treat the correct diagnosis. Diuresis + vasodilation + oxygen.",
       phases: [
         {
           label: "Immediate Treatment — STOP bronchodilators",
@@ -1547,6 +1540,7 @@ function openScenario(id) {
   currentScenario = SCENARIOS.find(s => s.id === id);
   currentScreen = 0;
   answered = false;
+  triedOptions = new Set();
   document.getElementById('scenario-hub').style.display = 'none';
   document.getElementById('scenario-view').style.display = 'block';
   renderProgressBar();
@@ -1563,6 +1557,7 @@ function goHub() {
 function nextScreen() {
   currentScreen++;
   answered = false;
+  triedOptions = new Set();
   renderProgressBar();
   renderScreen();
   window.scrollTo(0, 80);
@@ -1673,19 +1668,20 @@ function renderDiagnosis() {
         ${d.options.map((o, i) => `
           <button class="option-btn" onclick="selectOption(${i})" id="opt-${i}">
             <div class="option-letter">${o.letter}</div>
-            <div class="option-text">
-              ${o.text}
-              <div class="option-sub">${o.sub}</div>
-            </div>
+            <div class="option-text">${o.text}</div>
           </button>
         `).join('')}
       </div>
 
+      <div class="feedback-box tryagain-fb" id="fb-tryagain">
+        <div class="feedback-header">↩ Not quite — try again</div>
+        <div class="feedback-body" id="fb-tryagain-body"></div>
+      </div>
       <div class="feedback-box correct-fb" id="fb-correct">
         <div class="feedback-header">✓ Correct</div>
         <div class="feedback-body">${d.correctFeedback}</div>
       </div>
-      <div class="feedback-box incorrect-fb" id="fb-incorrect">
+      <div class="feedback-box incorrect-fb" id="fb-incorrect" style="display:none">
         <div class="feedback-header">✗ Incorrect — Here's Why</div>
         <div class="feedback-body">${d.incorrectFeedback}</div>
       </div>
@@ -1698,27 +1694,64 @@ function renderDiagnosis() {
   `;
 }
 
+// Track which options the learner has already tried
+let triedOptions = new Set();
+
 function selectOption(idx) {
   if (answered) return;
-  answered = true;
 
   const opts = document.querySelectorAll('.option-btn');
   const d = currentScenario.diagnosis;
-  
-  opts.forEach((btn, i) => {
-    btn.disabled = true;
-    if (d.options[i].correct) btn.classList.add('correct');
-    else if (i === idx && !d.options[i].correct) btn.classList.add('incorrect');
-    else btn.classList.add('neutral-reveal');
-  });
+  const btn = document.getElementById('opt-' + idx);
 
+  // ── CORRECT answer chosen ─────────────────────────────────────────────────
   if (d.options[idx].correct) {
-    document.getElementById('fb-correct').classList.add('show');
-  } else {
-    document.getElementById('fb-incorrect').classList.add('show');
-  }
+    answered = true;
 
-  document.getElementById('next-mgmt-btn').style.display = 'inline-flex';
+    // Lock all buttons and style them
+    opts.forEach((b, i) => {
+      b.disabled = true;
+      b.classList.remove('wrong-pick', 'shake');
+      if (d.options[i].correct) b.classList.add('correct');
+      else if (triedOptions.has(i)) b.classList.add('incorrect');
+      else b.classList.add('neutral-reveal');
+    });
+
+    // Hide try-again, show correct feedback and next button
+    document.getElementById('fb-tryagain').classList.remove('show');
+    document.getElementById('fb-correct').classList.add('show');
+    document.getElementById('next-mgmt-btn').style.display = 'inline-flex';
+
+  // ── WRONG answer chosen ───────────────────────────────────────────────────
+  } else {
+    // Already tried this one — ignore repeat click
+    if (triedOptions.has(idx)) return;
+    triedOptions.add(idx);
+
+    // Flash red + shake on the chosen button, then reset after animation
+    btn.classList.add('wrong-pick', 'shake');
+    setTimeout(() => {
+      btn.classList.remove('shake');
+      // Keep wrong-pick styling so they know they tried it, but re-enable others
+    }, 400);
+
+    // Disable just this wrong option so they cannot pick it again
+    btn.disabled = true;
+
+    // Show a brief, non-revealing try-again nudge
+    const nudges = [
+      'That's not the best answer here — consider the full clinical picture and try again.',
+      'Not quite — look again at the vital signs and examination findings.',
+      'Think about what the combination of findings tells you as a whole.',
+      'Consider which finding is most clinically significant in this context.',
+    ];
+    const nudge = nudges[triedOptions.size % nudges.length];
+    document.getElementById('fb-tryagain-body').textContent = nudge;
+    document.getElementById('fb-tryagain').classList.add('show');
+
+    // Hide correct feedback in case somehow visible
+    document.getElementById('fb-correct').classList.remove('show');
+  }
 }
 
 function renderManagement() {
