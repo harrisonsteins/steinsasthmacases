@@ -1667,10 +1667,10 @@ function selectOption(idx) {
 
     // Show a brief, non-revealing try-again nudge
     const nudges = [
-      'That's not the best answer here — consider the full clinical picture and try again.',
-      'Not quite — look again at the vital signs and examination findings.',
-      'Think about what the combination of findings tells you as a whole.',
-      'Consider which finding is most clinically significant in this context.',
+      "That's not the best answer here — consider the full clinical picture and try again.",
+      "Not quite — look again at the vital signs and examination findings.",
+      "Think about what the combination of findings tells you as a whole.",
+      "Consider which finding is most clinically significant in this context.",
     ];
     const nudge = nudges[triedOptions.size % nudges.length];
     document.getElementById('fb-tryagain-body').textContent = nudge;
