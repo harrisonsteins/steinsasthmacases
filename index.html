@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- cloudflare-disable-rocket-loader -->
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Acute Asthma — Clinical Scenarios | COROM</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
 
   :root {
     --navy:    #0D2137;
@@ -719,11 +718,8 @@
     .hub-grid { grid-template-columns: 1fr; }
   }
 </style>
-
-
 </head>
 <body>
-
 <header class="app-header">
   <div class="logo">COROM <span>·</span> Acute Asthma</div>
   <div class="header-tag">Interactive Clinical Scenarios — Role 2 Environment</div>
@@ -734,49 +730,49 @@
   <h1 class="hub-title">Clinical Scenario<br>Modules</h1>
   <p class="hub-subtitle">Eight interactive case-based scenarios covering the full spectrum of acute asthma management in a resource-limited Role 2 environment. Each scenario includes clinical presentation, diagnostic reasoning, and stepwise management.</p>
   <div class="hub-grid" id="hub-grid">
-    <div class="scenario-card" style="--card-accent:#0E7C7B" data-sid="1">
+    <div class="scenario-card" style="--card-accent:#0E7C7B" onclick="openScenario(1)">
       <div class="card-num">Scenario 01</div>
       <div class="card-title">The Tachypneic Farmer</div>
       <div class="card-desc">A 34-year-old agricultural worker with known asthma presents after dust exposure in the fields.</div>
       <div class="card-tags"><span class="tag teal">mild-moderate</span><span class="tag teal">diagnosis</span><span class="tag teal">first-line</span></div>
     </div>
-    <div class="scenario-card" style="--card-accent:#C0392B" data-sid="2">
+    <div class="scenario-card" style="--card-accent:#C0392B" onclick="openScenario(2)">
       <div class="card-num">Scenario 02</div>
       <div class="card-title">The Silent Chest</div>
       <div class="card-desc">A 28-year-old is brought in by vehicle after two days of worsening asthma and no inhaler access.</div>
       <div class="card-tags"><span class="tag red">near-fatal</span><span class="tag red">silent chest</span><span class="tag amber">escalation</span></div>
     </div>
-    <div class="scenario-card" style="--card-accent:#D97706" data-sid="3">
+    <div class="scenario-card" style="--card-accent:#D97706" onclick="openScenario(3)">
       <div class="card-num">Scenario 03</div>
       <div class="card-title">The Normal Blood Gas</div>
       <div class="card-desc">A 41-year-old with asthma who looks "improved" after treatment — but the blood gas tells a different story.</div>
       <div class="card-tags"><span class="tag amber">blood gas</span><span class="tag amber">pCO2 trap</span><span class="tag amber">deterioration</span></div>
     </div>
-    <div class="scenario-card" style="--card-accent:#059669" data-sid="4">
+    <div class="scenario-card" style="--card-accent:#059669" onclick="openScenario(4)">
       <div class="card-num">Scenario 04</div>
       <div class="card-title">The Salbutamol Lactate</div>
       <div class="card-desc">A patient on continuous salbutamol has a rising lactate — and a junior clinician is ready to intubate.</div>
       <div class="card-tags"><span class="tag green">lactic acidosis</span><span class="tag green">salbutamol</span><span class="tag green">avoid escalation</span></div>
     </div>
-    <div class="scenario-card" style="--card-accent:#7C3AED" data-sid="5">
+    <div class="scenario-card" style="--card-accent:#7C3AED" onclick="openScenario(5)">
       <div class="card-num">Scenario 05</div>
       <div class="card-title">The Deteriorating Transfer</div>
       <div class="card-desc">A 22-year-old being treated for asthma suddenly worsens. The wheeze has gone — is it improvement or catastrophe?</div>
       <div class="card-tags"><span class="tag red">pneumothorax</span><span class="tag red">complication</span><span class="tag purple">needle decompression</span></div>
     </div>
-    <div class="scenario-card" style="--card-accent:#0D2137" data-sid="6">
+    <div class="scenario-card" style="--card-accent:#0D2137" onclick="openScenario(6)">
       <div class="card-num">Scenario 06</div>
       <div class="card-title">The Intubation Decision</div>
       <div class="card-desc">A 45-year-old has failed all medical therapy. The decision to intubate must be made — and done safely.</div>
       <div class="card-tags"><span class="tag purple">RSI</span><span class="tag purple">ketamine</span><span class="tag purple">intubation</span></div>
     </div>
-    <div class="scenario-card" style="--card-accent:#C0392B" data-sid="7">
+    <div class="scenario-card" style="--card-accent:#C0392B" onclick="openScenario(7)">
       <div class="card-num">Scenario 07</div>
       <div class="card-title">The Intubated Asthmatic</div>
       <div class="card-desc">A mechanically ventilated asthmatic develops sudden hemodynamic collapse. The ventilator is killing him.</div>
       <div class="card-tags"><span class="tag red">auto-PEEP</span><span class="tag purple">ventilator</span><span class="tag red">hemodynamic collapse</span></div>
     </div>
-    <div class="scenario-card" style="--card-accent:#D97706" data-sid="8">
+    <div class="scenario-card" style="--card-accent:#D97706" onclick="openScenario(8)">
       <div class="card-num">Scenario 08</div>
       <div class="card-title">The Difficult Diagnosis</div>
       <div class="card-desc">A 67-year-old with asthma does not respond to bronchodilators. The diagnosis needs revisiting.</div>
@@ -787,16 +783,14 @@
 
 <!-- SCENARIO VIEW -->
 <div id="scenario-view">
-  <button class="back-btn" id="back-btn">
+  <button class="back-btn" onclick="goHub()">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
     All Scenarios
   </button>
   <div class="progress-bar" id="progress-bar"></div>
   <div id="screen-container"></div>
 </div>
-
-
-<script type="text/javascript" data-cfasync="false" data-cfnomodify="true">
+<script>
 // ═══════════════════════════════════════════════════════════════════
 //  SCENARIO DATA
 // ═══════════════════════════════════════════════════════════════════
@@ -1517,10 +1511,9 @@ function buildHub() {
   // Static HTML already rendered — JS only needed for scenario interactivity
   // Re-attach onclick handlers in case static HTML lost them
   const accentMap = { teal: '#0E7C7B', amber: '#D97706', red: '#C0392B', green: '#059669', purple: '#7C3AED' };
-  // Only rebuild if grid is somehow empty (fallback)
-  if (grid.children.length > 0) return;
+
   grid.innerHTML = SCENARIOS.map(s => `
-    <div class="scenario-card" style="--card-accent: ${s.accent}" data-sid="${s.id}">
+    <div class="scenario-card" style="--card-accent: ${s.accent}" onclick="openScenario(${s.id})">
       <div class="card-num">Scenario ${String(s.id).padStart(2,'0')}</div>
       <div class="card-title">${s.title}</div>
       <div class="card-desc">${s.description}</div>
@@ -1819,28 +1812,7 @@ function getNextScenarioButton() {
   </button>`;
 }
 
-// ═══════════════════════════════════════════════════════════════════
-//  INIT
-// ═══════════════════════════════════════════════════════════════════
-if (document.readyState === "loading") {
-} else {
-  document.addEventListener("DOMContentLoaded", function() {
-    buildHub();
-    attachCardListeners();
-  });
-
-  function attachCardListeners() {
-    // Attach click handlers to all scenario cards (avoids inline onclick + Cloudflare issues)
-    document.querySelectorAll('[data-sid]').forEach(function(card) {
-      card.addEventListener('click', function() {
-        openScenario(parseInt(this.getAttribute('data-sid')));
-      });
-    });
-    // Back button
-    var backBtn = document.getElementById('back-btn');
-    if (backBtn) backBtn.addEventListener('click', goHub);
-  }
-}
+buildHub();
 </script>
 </body>
 </html>
