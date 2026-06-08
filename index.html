@@ -1747,22 +1747,25 @@ function getNextScenarioButton() {
 // ═══════════════════════════════════════════════════════════════════
 if (document.readyState === "loading") {
 } else {
-  document.addEventListener("DOMContentLoaded", function() {
-    buildHub();
-    attachCardListeners();
+  // Event delegation on document — fires for ANY click anywhere on page
+  // This cannot fail due to timing since it listens on document itself
+  document.addEventListener('click', function(e) {
+    // Scenario card clicked (or child of card clicked)
+    var card = e.target.closest('[data-sid]');
+    if (card) {
+      openScenario(parseInt(card.getAttribute('data-sid')));
+      return;
+    }
+    // Back button
+    if (e.target.closest('#back-btn')) {
+      goHub();
+      return;
+    }
   });
 
-  function attachCardListeners() {
-    // Attach click handlers to all scenario cards (avoids inline onclick + Cloudflare issues)
-    document.querySelectorAll('[data-sid]').forEach(function(card) {
-      card.addEventListener('click', function() {
-        openScenario(parseInt(this.getAttribute('data-sid')));
-      });
-    });
-    // Back button
-    var backBtn = document.getElementById('back-btn');
-    if (backBtn) backBtn.addEventListener('click', goHub);
-  }
+  document.addEventListener("DOMContentLoaded", function() {
+    buildHub();
+  });
 }
 </script>
 </head>
